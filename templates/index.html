@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Recommender System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <style>
+    .text-white{
+    color:white
+    }
+  </style>
+  <body style="background-color:black">
+  <nav class="navbar" style="background-color : #ffd138">
+  <a class="navbar-brand" href="/" style="margin-left : 10px">
+   <strong> Book Recommender System </strong>
+  </a>
+    <ul style="list-style: none; margin: 0; padding: 0; display: flex; gap: 15px; align-items: center;">
+  <li><a href="/" style="text-decoration: none; color: #333; padding: 5px 10px; transition: background-color 0.3s;">Home</a></li>
+  <li><a href="/recommender" style="text-decoration: none; color: #333; padding: 5px 10px; transition: background-color 0.3s;">Recommender</a></li>
+  <li><a href="/contact" style="text-decoration: none; color: #333; padding: 5px 10px; transition: background-color 0.3s;">Contact</a></li>
+  </ul>
+</nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-white" style="margin-top:20px;text-align: center;">TOP 40 BOOKS 📖</h1>
+      </div>
+
+      {% for i in range(book_name|length) %}
+                <div class="col-md-3" style="margin-top:30px">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ image[i] }}">
+                            <h4>{{ book_name[i] }}</h4>
+                            <p>Author : {{ author[i] }}</p>
+                            <p>Published on : {{ year_of_publication[i] }}</p>
+                            <p>Votes : {{ votes[i] }}</p>
+                            <h5>Rating - {{ rating[i] | round(1) }} ⭐</h5>
+                            <a href="{{ amazon_url[i] }}" target="_blank" style="display: inline-block; margin-top: 10px; padding: 10px 15px; background-color: #ffd138; color: #333; text-decoration: none; border-radius: 5px; transition: background-color 0.3s;">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
