@@ -29,23 +29,27 @@ def recommender():
 @app.route('/recommend_books',methods=['post'])
 def recommend():
     user_input = request.form.get('user_input')
-    book_index = np.where(final_df.index == user_input)[0][0]
-    similar_books = sorted(list(enumerate(similarity_score[book_index])), key=lambda x: x[1], reverse=True)[1:5]
+    if user_input in final_df.index:
+        book_index = np.where(final_df.index == user_input)[0][0]
+        similar_books = sorted(list(enumerate(similarity_score[book_index])), key=lambda x: x[1], reverse=True)[1:5]
 
-    data = []
-    for i in similar_books:
-        item = []
-        temp_df = new_book[new_book['Book-Title'] == final_df.index[i[0]]]
-        temp_df.drop_duplicates('Book-Title')
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Title'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Year-Of-Publication'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['amazon_url'].values))
-        data.append(item)
+        data = []
+        for i in similar_books:
+            item = []
+            temp_df = new_book[new_book['Book-Title'] == final_df.index[i[0]]]
+            temp_df.drop_duplicates('Book-Title')
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Title'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Year-Of-Publication'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['amazon_url'].values))
+            data.append(item)
 
-    return render_template('recommender.html',data=data)
-
+            return render_template('recommender.html',data=data)
+    else:
+            message = "Book not found. Please try a different title."
+            return render_template('recommender.html', data=[], message=message)
+        
 @app.route('/contact')
 def contact():
     return  render_template('contact.html')
