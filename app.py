@@ -44,8 +44,7 @@ def recommend():
             item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
             item.extend(list(temp_df.drop_duplicates('Book-Title')['amazon_url'].values))
             data.append(item)
-
-            return render_template('recommender.html',data=data)
+        return render_template('recommender.html',data=data)
     else:
             message = "Book not found. Please try a different title."
             return render_template('recommender.html', data=[], message=message)
